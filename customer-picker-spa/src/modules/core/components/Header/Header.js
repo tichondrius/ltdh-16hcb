@@ -39,7 +39,7 @@ const Header = (props) => {
       <AppBar
         onLeftIconButtonTouchTap={() => changeStateDrawer()}
         iconElementRight={iconRight}
-        title="Định vị toạ đổ điểm"
+        title="Chọn toạ độ vị trí điểm"
       />
       <Drawer open={isDrawerOpening}>
         <MenuItem onClick={() => changeRoute(ROUTE_PATH.HOME)}>

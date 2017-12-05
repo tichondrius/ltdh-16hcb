@@ -21,7 +21,7 @@ import { ROUTE_PATH } from '../../../Routes';
 
 const HomePage = (props) => {
   return (
-    <DocumentTitle title="GrabFake - Định vị toạ độ điểm">
+    <DocumentTitle title="GrabFake - Quản lý trạng thái điểm">
       <ContainerWrapperStyled>
         <IntroducePanelStyled>
           <TopPanelStyled>
