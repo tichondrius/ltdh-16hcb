@@ -7,7 +7,7 @@ var infoModel = new Schema({
   name: { type: String },
   address: { type: String },
   type: { type: String },
-  status: { type: Number },
+  status: { type: String },
   point: { type: Schema.Types.ObjectId, ref: 'Point'},
 });
 

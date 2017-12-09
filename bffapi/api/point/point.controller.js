@@ -4,6 +4,6 @@ const pointController = {
     res.json([]);
   },
 };
-  
+
 module.exports = pointController;
     

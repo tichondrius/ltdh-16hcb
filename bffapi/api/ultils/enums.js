@@ -12,7 +12,11 @@ const ENUMS = {
     TELEPHONLIST: 'telephonlist',
     CUSTOMER_PICKER: 'customer_picker',
     POINT_MANAGEMENT: 'point_management',
-    CAR_DRIVEN: 'car_drivent',
+    CAR_DRIVEN: 'car_driven',
+  },
+  INFO_STATUS: {
+    NEW: 'new',
+    CREATED_POINT: 'created_point'
   },
 }
 
