@@ -30,7 +30,7 @@ const create = (req, res) => {
 
 const index = (req, res) => {
   const querys = {};
-  const { query: { type, status} } = req.query;
+  const { query: { type, status} } = req;
   if (type) {
     querys.type = type;
   }
