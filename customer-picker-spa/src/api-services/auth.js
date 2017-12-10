@@ -1,8 +1,9 @@
 export const postLogin = (username, password) => ({
   method: 'POST',
-  url: 'token',
+  url: 'auth/token',
   data: {
     username,
     password,
+    type: 'customer_picker'
   }
 });

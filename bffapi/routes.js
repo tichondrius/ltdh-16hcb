@@ -12,4 +12,5 @@ module.exports = function(app) {
   app.use('/api/points', require('./api/point'));
   app.use('/api/staffs', require('./api/staff'));
   app.use('/api/transportations', require('./api/transportation'));
+  app.use('/auth/token', require('./api/auth'))
 };

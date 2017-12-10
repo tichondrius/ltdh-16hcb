@@ -14,7 +14,6 @@ const index = (req, res) => {
 }
 
 const create = (req, res) => {
-  console.log(req.body);
   const validator = new Validator(req, res);
   validator.requiredAll([
     'carNumber',

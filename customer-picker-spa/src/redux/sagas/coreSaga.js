@@ -3,7 +3,7 @@ import { takeEvery, call, take, put, all, select } from 'redux-saga/effects';
 import _ from 'lodash';
 import { authLogout } from '../modules/authReducer'
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:9000/'
+export const BASE_URL = process.env.BASE_URL || 'http://localhost:9009/'
 
 export const getToken = state => state.auth.token;
 

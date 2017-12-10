@@ -29,7 +29,15 @@ const create = (req, res) => {
 }
 
 const index = (req, res) => {
-  infoService.getList().then(infos => res.json(infos))
+  const querys = {};
+  const { query: { type, status} } = req.query;
+  if (type) {
+    querys.type = type;
+  }
+  if (status) {
+    querys.status = status;
+  }
+  infoService.getList(querys).then(infos => res.json(infos))
   .catch(error => {
      console.log('Unexpected error', error);
      res.status(400).send('Unexpected error');

@@ -2,9 +2,9 @@ const { Infos } = require('../../collections');
 const { INFO_STATUS } = require('../ultils/enums');
 
 
-const getList = () => {
+const getList = (query = {}) => {
   return new Promise((resolve, reject) => {
-    Infos.find({}, (error, infos) => {
+    Infos.find(query, (error, infos) => {
       if (error) {
         reject(error);
       } else resolve(infos);
