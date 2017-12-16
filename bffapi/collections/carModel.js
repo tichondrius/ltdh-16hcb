@@ -9,6 +9,9 @@ var carModel = new Schema({
   type: { type: String },
   drivenName: { type: String },
   personCode: { type: String },
+  lat: { type: Number },
+  lng: { type: Number },
+  status: { type: String }
 });
 
 module.exports = mongoose.model('Car', carModel);
