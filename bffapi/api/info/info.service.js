@@ -11,6 +11,24 @@ const getList = (query = {}) => {
     })
   });
 }
+
+
+const assignPointToInfo = (infoId, pointId) => {
+  return new Promise((resolve, reject) => {
+    Infos.findById(infoId, (err, info) => {
+      if (err) throw err;
+      else Promise.resolve(info);
+    }).then((info) => {
+      info.point = pointId;
+      info.status = INFO_STATUS.CREATED_POINT;
+      info.save((error, infoUpdated) => {
+        if (error) throw err;
+        else resolve(infoUpdated);
+      })
+    });
+  });
+}
+
 const create = (phone, name, address, type) => {
   return new Promise((resolve, reject) => {
     const info = new Infos({
@@ -30,6 +48,7 @@ const create = (phone, name, address, type) => {
 const infoService = {
   create,
   getList,
+  assignPointToInfo,
 };
   
 module.exports = infoService;

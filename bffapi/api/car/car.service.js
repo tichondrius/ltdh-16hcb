@@ -11,6 +11,23 @@ function getList() {
   });
 }
 
+function updateData(carId, dataCar) {
+  return new Promise((resolve, reject) => {
+    Cars.findById(carId, (error, car) => {
+      if (error) throw error;
+      else return Promise.resolve(car);
+    }).then(car => {
+      Object.keys(dataCar).forEach(key => {
+        car[key] = dataCar[key];
+      })
+      car.save((error) => {
+        if (error) reject(error);
+        else resolve(car);
+      });
+    });
+  });
+} 
+
 function authCar (username, password) {
    return new Promise((resolve, reject) => {
     Cars.find({ username: username, password: password }, (error, cars) => {
@@ -56,6 +73,7 @@ const carService = {
   isExistsUsername,
   authCar,
   getList,
+  updateData,
 };
   
 module.exports = carService;

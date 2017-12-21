@@ -24,7 +24,7 @@ const create = (req, res) => {
       .catch(error => {
         console.log('Unexpected error', error);
         res.status(400).send('Unexpected error');
-      })
+      });
   }
 }
 

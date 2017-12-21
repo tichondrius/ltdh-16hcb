@@ -12,14 +12,10 @@ class Validator {
   }
 
   _getValue(paramName) {
+    return this.params[paramName] = _.get(this.req.params, paramName)
+      || _.get(this.req.body, paramName)
+      || _.get(this.req.query, paramName);
     this.params[paramName] = this.req.params[paramName];
-    if (!this.params[paramName]) {
-       this.params[paramName] = this.req.body[paramName];
-    }
-    if (!this.params[paramName]) {
-      this.params[paramName] = this.req.query[paramName];
-    }
-    return this.params[paramName];
   }
 
   required(paramName) {

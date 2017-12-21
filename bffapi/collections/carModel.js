@@ -9,8 +9,7 @@ var carModel = new Schema({
   type: { type: String },
   drivenName: { type: String },
   personCode: { type: String },
-  lat: { type: Number },
-  lng: { type: Number },
+  location: { type: Object}, 
   status: { type: String }
 });
 

@@ -13,6 +13,39 @@ const index = (req, res) => {
   });
 }
 
+update = (req, res) => {
+   const validator = new Validator(req, res);
+    validator.requiredAll([
+    'carId',
+    'location',
+    'location.lat',
+    'location.lng',
+  ]).validNumber('location.lat')
+  .validNumber('location.lng');
+
+  const errorsValidator = validator.getErrors();
+  if (errorsValidator.length > 0) {
+    res.status(400).json({
+      errors: errorsValidator
+    });
+    return;
+  }
+  const { location } = req.body;
+  const { carId } = req.params;
+  const dataUpdated = {
+    location,
+  };
+  carSerivce.updateData(carId, dataUpdated)
+    .then(car => {
+      res.json(car);
+    })
+    .catch(error => {
+      res.status(400).json({
+        errors: ['Unexpected error'],
+      })
+    });
+} 
+
 const create = (req, res) => {
   const validator = new Validator(req, res);
   validator.requiredAll([
@@ -65,6 +98,7 @@ const create = (req, res) => {
 const carController = {
   index,
   create,
+  update,
 };
   
 module.exports = carController;
