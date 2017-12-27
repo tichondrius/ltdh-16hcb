@@ -9,7 +9,7 @@ module.exports = function(io) {
       if (token) {
         console.log(`received connection from ${socket.id} with token: ${token}`);
         socket.emit('something.server.want.to.send', 'message'); // Gửi socket đi
-        jwt.signToken(token).then(({ username, type }) => {
+        jwt.verifyToken(token).then(({ username, type }) => {
           userService.addUsers({
             username,
             type,

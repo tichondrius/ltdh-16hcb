@@ -25,9 +25,27 @@ const connect = () => {
     });
   });
 }
+const SOCKET_METHOD = {
+    SERVER_INFO_ADDED: 'server/Info_Added',
+    SERVER_INFO_UPDATED: 'server/Info_Updated',
+    SERVER_POINT_ADDED: 'server/Point_Added',
+    SERVER_POINT_UPDATED: 'server/Point_Updated',
+  };
 
 function subscribe(socket) {
   return eventChannel(emit => {
+    socket.on(SOCKET_METHOD.SERVER_INFO_ADDED, data => {
+      console.log('info_add', data);
+    });
+    socket.on(SOCKET_METHOD.SERVER_INFO_UPDATED, data => {
+      console.log('info_update', data);
+    });
+    socket.on(SOCKET_METHOD.SERVER_POINT_ADDED, data => {
+      console.log('point_add', data);
+    });
+    socket.on(SOCKET_METHOD.SERVER_POINT_UPDATED, data => {
+      console.log('point_update', data);
+    });
     socket.on('something.server.want.to.send', (message) => {
       console.log('something.server.want.to.send', message);
       emit({ type: 'XXX'});

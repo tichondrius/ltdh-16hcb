@@ -20,7 +20,10 @@ const create = (req, res) => {
   } else {
     const { phone, name, address, type } = req.body;
     infoService.create(phone, name, address, type)
-      .then((infoNew) => res.json(infoNew))
+      .then((infoNew) => {
+        infoService.socketEmitInfoAdded(infoNew);
+        res.json(infoNew)
+      })
       .catch(error => {
         console.log('Unexpected error', error);
         res.status(400).send('Unexpected error');

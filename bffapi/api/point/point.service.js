@@ -1,4 +1,7 @@
 const { Points } = require('../../collections');
+const { io } = require('../../server');
+const userService = require('../../servicies/userService');
+const enums = require('../ultils/enums');
 
 const insertPoint = (id, info, location, real_address) => {
   return new Promise((resolve, reject) => {
@@ -15,8 +18,40 @@ const insertPoint = (id, info, location, real_address) => {
   });
 }
 
+const getById = (pointId) => {
+  Points.findById(pointId, (error, point) => {
+    if (error) return Promise.reject(error);
+    return Promise.resolve(info);
+  });
+}
+
+
+const socketEmitPointUpdated = (pointId) => {
+  getById(pointId)
+    .then(point => {
+      const users = userService.getSocketIdByTypes([enums.TYPE_USER.CUSTOMER_PICKER, enums.TYPE_USER.TELEPHONLIST]);
+      users.forEach((user) => {
+        io.sockets.sockets(user.socketId)
+          .emit(enums.SOCKET_METHOD.SERVER_POINT_UPDATED, point);
+      });
+    }).catch(error => {
+      console.log('error', error);
+    }) 
+}
+const socketEmitPointAdded = (newPoint) => {
+  const users = userService.getSocketIdByTypes([enums.TYPE_USER.CUSTOMER_PICKER, enums.TYPE_USER.TELEPHONLIST]);
+  users.forEach((user) => {
+    io.sockets.sockets(user.socketId)
+      .emit(enums.SOCKET_METHOD.SERVER_POINT_ADDED, newPoint);
+  });
+}  
+
+
+
 const pointService = {
-  insertPoint
+  insertPoint,
+  socketEmitPointAdded,
+  socketEmitPointUpdated,
 };
   
 module.exports = pointService;

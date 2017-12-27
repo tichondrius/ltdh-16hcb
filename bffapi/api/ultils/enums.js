@@ -10,7 +10,6 @@ const ENUMS = {
   TYPE_USER: {
     TELEPHONLIST: 'telephonlist',
     CUSTOMER_PICKER: 'customer_picker',
-    POINT_MANAGEMENT: 'point_management',
     CAR_DRIVEN: 'car_driven',
   },
   POINT_STATUS: {
@@ -24,6 +23,12 @@ const ENUMS = {
     NEW: 'new',
     CREATED_POINT: 'created_point'
   },
+  SOCKET_METHOD: {
+    SERVER_INFO_ADDED: 'server/Info_Added',
+    SERVER_INFO_UPDATED: 'server/Info_Updated',
+    SERVER_POINT_ADDED: 'server/Point_Added',
+    SERVER_POINT_UPDATED: 'server/Point_Updated',
+  }  
 }
 
 module.exports = ENUMS;

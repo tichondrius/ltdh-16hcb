@@ -30,6 +30,8 @@ const post = (req, res) => {
     pointService.insertPoint(pointId, info, location, real_address),
     infoService.assignPointToInfo(info, pointId)
   ]).then(results => {
+    infoService.socketEmitInfoUpdated(info);
+    pointService.socketEmitPointUpdated(pointId);
     res.json(results[0]);
   }).catch(error => {
     console.log('error', error);

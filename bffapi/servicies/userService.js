@@ -22,17 +22,20 @@ const getSocketIdByUsername = (username) => {
 const getSocketIdByType = (type) => {
   return listUsers.filter(user => user.type === type)
     .map(userFilterd => userFilterd.socketId);
+} 
+
+const getSocketIdByTypes = (types) => {
+  return listUsers.filter(user => types.indexOf(user.type) !== -1);
 }
 
 const getListUsers = () => listUsers;
-
-
 
 module.exports = {
   addUsers,
   removeUsersBySocketId,
   removeUsersByUsername,
   getSocketIdByType,
+  getSocketIdByTypes,
   getSocketIdByUsername,
   getListUsers,
 }
