@@ -1,6 +1,5 @@
 const { Infos } = require('../../collections');
 const { INFO_STATUS } = require('../ultils/enums');
-const { io } = require('../../server');
 const userService = require('../../servicies/userService');
 const enums = require('../ultils/enums');
 const getList = (query = {}) => {
@@ -14,19 +13,23 @@ const getList = (query = {}) => {
 }
 
 const getById = (infoId) => {
-  Infos.findById(infoId, (error, info) => {
-    if (error) return Promise.reject(error);
-    return Promise.resolve(info);
+  return new Promise((resolve, reject) => {
+    Infos.findById(infoId, (error, info) => {
+      if (error) return reject(error);
+      return resolve(info);
+    });
   });
+  
 }
 
 
 const socketEmitInfoUpdated = (infoId) => {
   getById(infoId)
-    .then(info => {
-      const users = userService.getSocketIdByTypes([enums.TYPE_USER.CUSTOMER_PICKER, enums.TYPE_USER.TELEPHONLIST]);
+    .then(newInfo => {
+      const users = userService
+        .getSocketIdByTypes([enums.TYPE_USER.CUSTOMER_PICKER, enums.TYPE_USER.TELEPHONLIST]);
       users.forEach((user) => {
-        io.sockets.sockets(user.socketId)
+        global.io.sockets.sockets[user.socketId]
           .emit(enums.SOCKET_METHOD.SERVER_INFO_UPDATED, newInfo);
       });
     }).catch(error => {
@@ -34,9 +37,10 @@ const socketEmitInfoUpdated = (infoId) => {
     }) 
 }
 const socketEmitInfoAdded = (newInfo) => {
-  const users = userService.getSocketIdByTypes([enums.TYPE_USER.CUSTOMER_PICKER, enums.TYPE_USER.TELEPHONLIST]);
+  const users = userService
+    .getSocketIdByTypes([enums.TYPE_USER.CUSTOMER_PICKER, enums.TYPE_USER.TELEPHONLIST]);
   users.forEach((user) => {
-    io.sockets.sockets(user.socketId)
+    global.io.sockets.sockets[user.socketId]
       .emit(enums.SOCKET_METHOD.SERVER_INFO_ADDED, newInfo);
   });
 }  
