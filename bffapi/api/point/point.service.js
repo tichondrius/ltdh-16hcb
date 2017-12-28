@@ -2,6 +2,24 @@ const { Points } = require('../../collections');
 const userService = require('../../servicies/userService');
 const enums = require('../ultils/enums');
 
+const getList = (query = {}) => {
+  return new Promise((resolve, reject) => {
+    Points.find(query).populate([
+      {
+        path: 'info',
+      },
+      {
+        path: 'car',
+      }
+    ]).exec((error, points)=> {
+      if (error) {
+        reject(error);
+      } else resolve(points);
+    })
+  });
+}
+
+
 const insertPoint = (id, info, location, real_address) => {
   return new Promise((resolve, reject) => {
     const newPoint = new Points({
@@ -55,6 +73,7 @@ const pointService = {
   insertPoint,
   socketEmitPointAdded,
   socketEmitPointUpdated,
+  getList,
 };
   
 module.exports = pointService;

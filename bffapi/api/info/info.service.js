@@ -2,9 +2,14 @@ const { Infos } = require('../../collections');
 const { INFO_STATUS } = require('../ultils/enums');
 const userService = require('../../servicies/userService');
 const enums = require('../ultils/enums');
+
 const getList = (query = {}) => {
   return new Promise((resolve, reject) => {
-    Infos.find(query, (error, infos) => {
+    Infos.find(query).populate([
+      {
+        path: 'point',
+      }
+    ]).exec((error, infos)=> {
       if (error) {
         reject(error);
       } else resolve(infos);

@@ -4,8 +4,18 @@ const Validador = require('../ultils/validator');
 const mongoose = require('mongoose');
 
 const index = (req, res) => {
-
+  const querys = {};
+  const { query: { status} } = req;
+  if (status) {
+    querys.status = status;
+  }
+  pointService.getList(querys).then(points => res.json(points))
+  .catch(error => {
+     console.log('Unexpected error', error);
+     res.status(400).send('Unexpected error');
+  })   
 }
+
 const post = (req, res) => {
   const validator = new Validador(req, res);
   validator.requiredAll([

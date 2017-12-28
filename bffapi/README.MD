@@ -7,3 +7,8 @@
 
 - Sử dụng NodeJS, MongoDB và SocketIO để giao tiếp với frontend.
 
+
+## - Development
+- `node server.js` khi run production
+- `gulp` khi development
+
