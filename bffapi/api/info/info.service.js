@@ -19,12 +19,13 @@ const getList = (query = {}) => {
 
 const getById = (infoId) => {
   return new Promise((resolve, reject) => {
-    Infos.findById(infoId, (error, info) => {
+    Infos.findById(infoId).populate([{
+      path: 'point'
+    }]).exec((error, info) => {
       if (error) return reject(error);
       return resolve(info);
     });
   });
-  
 }
 
 

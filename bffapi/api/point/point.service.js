@@ -37,7 +37,11 @@ const insertPoint = (id, info, location, real_address) => {
 
 const getById = (pointId) => {
   return new Promise((resolve, reject) => {
-    Points.findById(pointId, (error, point) => {
+    Points.findById(pointId).populate([{
+      path: 'info'
+    }, {
+      path: 'car'
+    }]).exec((error, point) => {
       if (error) return reject(error);
       return resolve(point);
     });
