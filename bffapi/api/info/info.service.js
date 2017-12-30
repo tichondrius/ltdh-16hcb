@@ -40,15 +40,20 @@ const socketEmitInfoUpdated = (infoId) => {
       });
     }).catch(error => {
       console.log('error', error);
-    }) 
+    });
 }
-const socketEmitInfoAdded = (newInfo) => {
-  const users = userService
-    .getSocketIdByTypes([enums.TYPE_USER.CUSTOMER_PICKER, enums.TYPE_USER.TELEPHONLIST]);
-  users.forEach((user) => {
-    global.io.sockets.sockets[user.socketId]
-      .emit(enums.SOCKET_METHOD.SERVER_INFO_ADDED, newInfo);
-  });
+const socketEmitInfoAdded = (newInfoId) => {
+    getById(newInfoId)
+    .then(newInfo => {
+      const users = userService
+        .getSocketIdByTypes([enums.TYPE_USER.CUSTOMER_PICKER, enums.TYPE_USER.TELEPHONLIST]);
+      users.forEach((user) => {
+        global.io.sockets.sockets[user.socketId]
+          .emit(enums.SOCKET_METHOD.SERVER_INFO_UPDATED, newInfo);
+      });
+    }).catch(error => {
+      console.log('error', error);
+    });
 }  
 
 const assignPointToInfo = (infoId, pointId) => {

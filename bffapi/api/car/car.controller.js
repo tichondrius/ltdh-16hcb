@@ -37,6 +37,7 @@ update = (req, res) => {
   };
   carSerivce.updateData(carId, dataUpdated)
     .then(car => {
+      carSerivce.socketEmitCarUpdated(carId);
       res.json(car);
     })
     .catch(error => {
@@ -85,7 +86,10 @@ const create = (req, res) => {
       });
     } else {
       carSerivce.insertCar(carNumber, username, password, type, drivenName, personCode)
-        .then(newCar => res.json(newCar))
+        .then(newCar => {
+          res.json(newCar);
+          carSerivce.socketEmitCarAdded(newCar._id);
+        })
         .catch(error => {
           console.log('Unexpected error', error);
           res.status(400).json({

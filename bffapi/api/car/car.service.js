@@ -1,5 +1,6 @@
 const { Cars } = require('../../collections');
-
+const userService = require('../../servicies/userService');
+const enums = require('../ultils/enums');
 
 function getList() {
   return new Promise((resolve, reject) => {
@@ -11,6 +12,25 @@ function getList() {
   });
 }
 
+function getById (id) {
+   return new Promise((resolve, reject) => {
+    Cars.findById(id, (err, car) => {
+      if (err) reject(err);
+      else resolve(car);
+    })
+  });
+}
+
+function getByUsername (username) {
+  return new Promise((resolve, reject) => {
+    Cars.findOne({
+      username: username,
+    }, (err, car) => {
+      if (err) reject(err);
+      else resolve(car);
+    })
+  });
+} 
 function updateData(carId, dataCar) {
   return new Promise((resolve, reject) => {
     Cars.findById(carId, (error, car) => {
@@ -68,12 +88,43 @@ function insertCar (carNumber, username, password, type, drivenName, personCode)
   });
 }
 
+const socketEmitCarUpdated = (carId) => {
+  getById(carId)
+    .then(carUpdated => {
+      const users = userService
+        .getSocketIdByTypes([enums.TYPE_USER.CUSTOMER_PICKER, enums.TYPE_USER.TELEPHONLIST]);
+      users.forEach((user) => {
+        global.io.sockets.sockets[user.socketId]
+          .emit(enums.SOCKET_METHOD.SERVER_CAR_UPDATED, carUpdated);
+      });
+    }).catch(error => {
+      console.log('error', error);
+    });
+}
+
+const socketEmitCarAdded = (carId) => {
+  getById(carId)
+    .then(carUpdated => {
+      const users = userService
+        .getSocketIdByTypes([enums.TYPE_USER.CUSTOMER_PICKER, enums.TYPE_USER.TELEPHONLIST]);
+      users.forEach((user) => {
+        global.io.sockets.sockets[user.socketId]
+          .emit(enums.SOCKET_METHOD.SERVER_CAR_ADDED, carUpdated);
+      });
+    }).catch(error => {
+      console.log('error', error);
+    });
+}
+
 const carService = {
   insertCar,
   isExistsUsername,
   authCar,
   getList,
   updateData,
+  getByUsername,
+  socketEmitCarAdded,
+  socketEmitCarUpdated,
 };
   
 module.exports = carService;

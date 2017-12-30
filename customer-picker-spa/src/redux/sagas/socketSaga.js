@@ -10,6 +10,10 @@ import {
 } from '../modules/authReducer';
 import { persistedDone } from '../modules/configReducer';
 import { BASE_URL } from './coreSaga';
+import { addCar, updateCar } from '../modules/carReducer';
+import { addInfo, updateInfo } from '../modules/infoReducer';
+import { addPoint, updatePoint } from '../modules/pointReducer';
+import { SOCKET_METHOD } from '../../utils/enums';
 
 let socket;
 export const getSocket = () => {
@@ -25,30 +29,44 @@ const connect = () => {
     });
   });
 }
-const SOCKET_METHOD = {
-    SERVER_INFO_ADDED: 'server/Info_Added',
-    SERVER_INFO_UPDATED: 'server/Info_Updated',
-    SERVER_POINT_ADDED: 'server/Point_Added',
-    SERVER_POINT_UPDATED: 'server/Point_Updated',
-  };
+
 
 function subscribe(socket) {
   return eventChannel(emit => {
-    socket.on(SOCKET_METHOD.SERVER_INFO_ADDED, data => {
-      console.log('info_add', data);
+    socket.on(SOCKET_METHOD.SERVER_INFO_ADDED, info => {
+      console.log('info_add', info);
+      emit(addInfo(info))
     });
-    socket.on(SOCKET_METHOD.SERVER_INFO_UPDATED, data => {
-      console.log('info_update', data);
+    socket.on(SOCKET_METHOD.SERVER_INFO_UPDATED, info => {
+      console.log('info_update', info);
+      emit(updateInfo(info));
     });
-    socket.on(SOCKET_METHOD.SERVER_POINT_ADDED, data => {
-      console.log('point_add', data);
+    socket.on(SOCKET_METHOD.SERVER_POINT_ADDED, point => {
+      console.log('point_add', point);
+      emit(addPoint(point));
     });
-    socket.on(SOCKET_METHOD.SERVER_POINT_UPDATED, data => {
-      console.log('point_update', data);
+    socket.on(SOCKET_METHOD.SERVER_POINT_UPDATED, point => {
+      console.log('point_update', point);
+      emit(updatePoint(point));
     });
+    socket.on(SOCKET_METHOD.SERVER_CAR_ADDED, car => {
+      emit(addCar(car));
+      console.log('car_add', car);
+    });
+    socket.on(SOCKET_METHOD.SERVER_CAR_UPDATED, car => {
+      emit(updateCar(car));
+      console.log('car_update', car);
+    });
+    socket.on(SOCKET_METHOD.SERVER_SEND_POINT_REQUEST, point => {
+      emit({
+        type: SOCKET_METHOD.SERVER_SEND_POINT_REQUEST,
+        point,
+      });
+      console.log('request_point', point);
+    })  
     socket.on('something.server.want.to.send', (message) => {
       console.log('something.server.want.to.send', message);
-      emit({ type: 'XXX'});
+      emit({ type: 'something.server.want.to.send', message});
     });
     return () => {};
   });

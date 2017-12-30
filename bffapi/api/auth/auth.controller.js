@@ -13,11 +13,11 @@ const auth = (req, res) => {
   ]).validValue('type',[
     TYPE_USER.TELEPHONLIST,
     TYPE_USER.CUSTOMER_PICKER,
-    TYPE_USER.POINT_MANAGEMENT,
+    TYPE_USER.CAR_DRIVEN,
     ]);
   const errorsValidator = validator.getErrors();
   if (errorsValidator.length > 0) {
-    res.json({
+    res.status(400).json({
       errors: errorsValidator,
     });
     return;

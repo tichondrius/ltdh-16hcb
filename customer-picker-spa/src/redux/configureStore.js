@@ -31,7 +31,7 @@ export default function configureStore() {
 
   persistStore(
     store,
-    { blacklist: ['ui', 'config'] });
+    { blacklist: ['ui', 'config', 'car', 'info', 'point'] });
 
   return store;
 }

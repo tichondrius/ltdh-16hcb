@@ -7,3 +7,8 @@ export const postLogin = (username, password) => ({
     type: 'customer_picker'
   }
 });
+
+
+export default {
+  postLogin,
+}
