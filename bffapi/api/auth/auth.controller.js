@@ -31,6 +31,7 @@ const auth = (req, res) => {
     let payload;
     if (authCar !== false) {
       payload = {
+        _id: authCar._id,
         username: authCar.username,
         name: authCar.drivenName,
         type: TYPE_USER.CAR_DRIVEN,
@@ -38,6 +39,7 @@ const auth = (req, res) => {
     } 
     if (authStaff !== false) {
       payload = {
+        _id: authStaff._id,
         username: authStaff.username,
         name: authStaff.name,
         type: type,
@@ -47,6 +49,7 @@ const auth = (req, res) => {
        signToken(payload).then(token => {
         res.json({
           token,
+          payload,
         });
       }).catch(error => { throw new Error(error)});
     } else {

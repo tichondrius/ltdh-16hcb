@@ -30,10 +30,13 @@ update = (req, res) => {
     });
     return;
   }
-  const { location } = req.body;
+  const { location: { lat, lng} } = req.body;
   const { carId } = req.params;
   const dataUpdated = {
-    location,
+    location: {
+      lat: Number(lat),
+      lng: Number(lng),
+    },
   };
   carSerivce.updateData(carId, dataUpdated)
     .then(car => {
