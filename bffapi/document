@@ -1,0 +1,606 @@
+
+Api cung cấp từ Backend
+
+Lưu ý ngoài trừ api lấy token. Mọi lời gọi api khác cần gắn token vào Header
+    
+Vd: authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0YWZmMTIzIiwibmFtZSI6IlN0YWZmIDEyMzQ1IiwidHlwZSI6InRlbGVwaG9ubGlzdCIsImlhdCI6MTUxMjg4MjgyMCwiZXhwIjoxNTE4MDY2ODIwfQ.zi8FrryG47wsR2E2D8DGD7ixtbr4HKXkK3o4R6Wyzqc
+1. Api đầy đủ
+2. Dùng để làm gì
+3. Mô tả các Tham số truyền
+4. Mô tả các Tham số trả về nếu thành công
+5. Mô tả các Tham số trả về nếu thất bại  
+6. Ví dụ  để có thể gọi thành công 1 api có
+7. Ví dụ để có thể gọi thất bại nếu có
+-----------------------------------------------------------
+
+
+
+# 1 - Api đầy đủ
+
+POST/api/staffs
+
+# 2 - Thêm nhân viên mới
+# 3 - Mô tả tham số truyền
++ Params:
++ QueryString:
++ Data(Body):   
+ {
+     "username": '...', # 
+     "password": '...', # 
+     "name": '...' # Tên nhân viên
+ }
+# 4 - Thành công trả về
+[20X] - Nhân viên mới đã thêm
+# 5 - Lỗi trả về
+[40X] - errors: ["Thông tin lỗi"];
+# 6 - Ví dụ sửa thành công (nếu có thể):
+
+POST'/api/staffs'
+{
+  "username": "staff1234",
+  "password": "123456",
+  "name": "Staff 12345"
+}
+Kết quả: 
+[200] -
+{
+    "__v": 0,
+    "username": "staff1234",
+    "password": "123456",
+    "name": "Staff 12345",
+    "_id": "5a2cc2b85d863f0fa8bbfe9a"
+}
+#7
+Kết quả: 
+[400] -
+        
+{
+"errors": [
+  "Username is exist on system"
+],
+}
+
+-----------------------------------------------------------
+# 1 - Api đầy đủ
+
+GET/api/staffs
+
+# 2 - lấy danh sách nhân viên 
+# 3 - Mô tả tham số truyền
++ Params:
++ QueryString:
++ Data(Body):   
+# 4 - Thành công trả về
+[200] - Danh sách nhân viên tìm được  
+# 5 - Lỗi trả về
+[40X] - errors: ["Thông tin lỗi"];
+# 6 - Ví dụ sửa thành công (nếu có thể):
+
+GET'/api/staffs'
+{
+  "username": "staff1234",
+  "password": "123456",
+  "name": "Staff 12345"
+}
+Kết quả: 
+[200] -
+[
+  {
+"_id": "5a2b75cc54833211e0f801e7",
+"username": "staff123",
+"password": "123456",
+"name": "Staff 12345",
+"__v": 0
+},
+  {
+"_id": "5a2cc2b85d863f0fa8bbfe9a",
+"username": "staff1234",
+"password": "123456",
+"name": "Staff 12345",
+"__v": 0
+}
+],
+-----------------------------------------------------------
+# 1 - Api đầy đủ
+
+POST/api/cars
+
+# 2 - Thêm xe mới
+# 3 - Mô tả tham số truyền
++ Params:
++ QueryString:
++ Data(Body):   
+ {
+  "carNumber": "BS60-4010", #biển số
+  "username": "tichondrius",
+  "password": "123456",
+  "type": "normal", #loại xe 1 trong 2 giá trị "normal" hoặc "premium" 
+  "drivenName": "Bui Thanh Van", #tên tài xế
+  "personCode": "272461389" #cmnd
+}
+# 4 - Thành công trả về
+[20X] - Xe mới đã thêm
+# 5 - Lỗi trả về
+[40X] - errors: ["Thông tin lỗi"];
+# 6 - Ví dụ sửa thành công (nếu có thể):
+
+Như phần Data body
+Kết quả: 
+[200] -
+{
+"__v": 0,
+"carNumber": "BS60-4010",
+"username": "tichondrius1",
+"password": "123456",
+"type": "normal",
+"drivenName": "Bui Thanh Van",
+"personCode": "272461389",
+"_id": "5a2cc5715d863f0fa8bbfe9b"
+}
+
+
+#7
+Kết quả: 
+[400] -
+        
+{
+"errors": [
+  "Username is exist on system"
+],
+}
+
+-----------------------------------------------------------
+# 1 - Api đầy đủ
+
+GET/api/cars
+
+# 2 - lấy danh sách xe ( không phải danh sách xe đang online )
+# 3 - Mô tả tham số truyền
++ Params:
++ QueryString: 
++ Data(Body):   
+# 4 - Thành công trả về danh sách xe đã tạo 
+[200] - Danh sách nhân viên tìm được  
+# 5 - Lỗi trả về
+[400] - errors: ["Thông tin lỗi"];
+# 6 - Ví dụ tạo thành công (nếu có thể):
+
+GET'/api/cars'
+
+Kết quả: 
+[
+  {
+"_id": "5a2b6d1ad12bb813a0cebf56",
+"carNumber": "BS60-4010",
+"username": "tichondrius",
+"password": "123456",
+"type": "normal",
+"drivenName": "Bui Thanh Van",
+"personCode": "272461389",
+"__v": 0
+}
+],
+-----------------------------------------------------------
+# 1 - Api đầy đủ
+
+POST /api/infos
+
+# 2 - Thêm thông tin mới vào bảng info
+# 3 - Mô tả tham số truyền
++ Params:
++ QueryString:
++ Data(Body):   
+{
+  "phone": "01672810918", 
+  "name": "Bui Thanh Van",
+  "address": "60 Hoang Hoa Tham", #địa chỉ khách hàng đọc",  
+  "type": "normal" #Loại xe khách hàng chọn 1 trong 2 giá trị "normal" hoặc "premium" 
+}
+# 4 - Thành công trả về
+[20X] - Info mới được thêm 
+# 5 - Lỗi trả về
+[40X] - errors: ["Thông tin lỗi"];
+# 6 - Ví dụ  thành công (nếu có thể):
+
+POST'/api/infos'
+{
+  "phone": "01672810918",
+  "name": "Bui Thanh Van",
+  "address": "60 Hoang Hoa Tham",
+  "type": "normal"
+}
+Kết quả: 
+[200] -
+{
+"__v": 0,
+"phone": "01672810918",
+"name": "Bui Thanh Van",
+"address": "60 Hoang Hoa Tham",
+"type": "normal",
+"status": "new",
+"_id": "5a2cc6af5d863f0fa8bbfe9c"
+}
+
+
+#7
+POST'/api/infos'
+{
+  "phone": "sdf",
+  "name": "sdf",
+  "address": "sdf",
+  "type": "dfd"
+}
+Kết quả: 
+[400] -
+        
+{
+"errors": [
+  "Param phone have not length valid from 10 to Infinity",
+  "Param name have not length valid from 10 to Infinity",
+  "Param address have not length valid from 10 to Infinity",
+  "Param type is not have valid values: ["normal","premium"]"
+],
+}
+-----------------------------------------------------------
+# 1 - Api đầy đủ
+
+GET/api/infos
+
+# 2 - Lấy danh sách điểm info
+# 3 - Mô tả tham số truyền
++ Params:
++ QueryString: 
+ - type: 'Nếu muốn lọc theo loại điểm' 1 trong 2 giá trị  "premium" hoặc "normal" 
+ - status: 'Nếu muôn lọc theo status điểm' 1 trong 2 giá trị "created_point" hoặc "new" 
++ Data(Body):   
+# 4 - Thành công trả về danh sách xe đã tạo 
+[200] - Danh sách nhân viên tìm được  
+# 5 - Lỗi trả về
+[400] - errors: ["Thông tin lỗi"];
+# 6 - Ví dụ tạo thành công (nếu có thể):
+
+GET'/api/cars'
+
+Kết quả: 
+[
+  {
+"_id": "5a2b883469fb0f0128c099f6",
+"phone": "01672810918",
+"name": "Hoang Le Thuy Hang",
+"address": "60 Hoang Hoa Tham",
+"type": "normal",
+"status": "new",
+"__v": 0
+},
+  {
+"_id": "5a2b883869fb0f0128c099f7",
+"phone": "01672810918",
+"name": "Hoang Le Thuy Hang",
+"address": "60 Hoang Hoa Tham",
+"type": "normal",
+"status": "new",
+"__v": 0
+},
+  {
+"_id": "5a2cc6af5d863f0fa8bbfe9c",
+"phone": "01672810918",
+"name": "Bui Thanh Van",
+"address": "60 Hoang Hoa Tham",
+"type": "normal",
+"status": "new",
+"__v": 0
+}
+],
+
+-----------------------------------------------------------
+
+# 1 - Api đầy đủ
+
+POST /auth/token 
+
+# 2 - Đăng nhập để lấy token cho cả nhân viên lẫn tài xế 
+# 3 - Mô tả tham số truyền
++ Params:
++ QueryString:
++ Data(Body):   
+{
+  "username": "",
+  "password": "",
+  "type": #Loại người dùng app
+}
+* Lưu ý loại dùng app tương ứng loại app đăng nhập
+Có 3 loại tương ứng với 3 app của tụi mình
+'telephonlist',
+'customer_picker',
+'car_driven',
+
+
+ 
+# 4 - Thành công trả về
+[200] - Token trả về 
+{
+    token: '...',
+    "payload": {
+        "_id": "5a2b6dd12f29e708a8d7a9ae",
+        "username": "tichondrius",
+        "name": "Bui Thanh Van",
+        "type": "car_driven"
+}
+} 
+# 5 - Lỗi trả về
+[40X] - errors: ["Thông tin lỗi"];
+# 6 - Ví dụ  thành công (nếu có thể):
+
+POST'/auth/token'
+//Với nhân viên bt
+{
+  "username": "staff123",
+  "password": "123456",
+  "type": "telephonlist"
+}
+//Với tài xế
+{
+  "username": "tichondrius",
+  "password": "123456"
+}
+Kết quả: 
+[200] -
+{
+"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0YWZmMTIzIiwibmFtZSI6IlN0YWZmIDEyMzQ1IiwidHlwZSI6InRlbGVwaG9ubGlzdCIsImlhdCI6MTUxMjg4NDc5NCwiZXhwIjoxNTE4MDY4Nzk0fQ.c8mMbvFJ_BbqwyOXc_5JCEwhlG-6DrSxSJqKUvlsGT0"
+}
+
+#7
+POST'/auth/token'
+{
+  "username": "staff123",
+  "password": "1234523236",
+  "type": "telephonlist"
+}
+Kết quả: 
+[400] -
+{
+  "username": "staff123",
+  "password": "1234523236",
+  "type": "telephonlist"
+}
+-----------------------------------------------------------
+
+# 1 - Api đầy đủ
+
+POST /api/points
+
+# 2 - Tạo point từ info
+# 3 - Mô tả tham số truyền
++ Params:
++ QueryString:
++ Data(Body):   
+{
+  "info": "5a43cbf5433d9c1754f7dd31", #Id của của info tạo
+  "real_address": "Trang Bom, Dong Nai", # Địa chỉ lấy từ geocoding được
+  "location": { # Tọa độ geocoding được
+    "lat": "123",
+    "lng": "1"
+  }
+}
+# 4 - Thành công trả về
+[20X] - Point mới được tạo
+# 5 - Lỗi trả về
+[40X] - errors: ["Thông tin lỗi"];
+# 6 - Ví dụ  thành công (nếu có thể):
+
+POST'/api/points'
+{
+  "info": "5a43cbf5433d9c1754f7dd31",
+  "real_address": "Trang Bom, Dong Nai",
+  "location": {
+    "lat": "123",
+    "lng": "1"
+  }
+}
+Kết quả: 
+[200] -
+{
+"__v": 0,
+"_id": "5a48929f44e1060d88893c1a",
+"info": "5a43cbf5433d9c1754f7dd31",
+"location": {
+"lng": "1",
+"lat": "123"
+},
+"real_address": "Trang Bom, Dong Nai",
+"status": "not_car_yet"
+}
+
+
+#7
+POST'/api/points'
+{
+  "info": "5a43cbf5433d9c1754f7dd31",
+  "real_address": "Trang Bom, Dong Nai",
+}
+Kết quả: 
+[400] -
+{
+"errors": [
+  "Param location is required",
+  "Param location.lat is required",
+  "Param location.lng is required"
+],
+}
+-----------------------------------------------------------
+# 1 - Api đầy đủ
+
+GET /api/points
+
+# 2 - Lấy toàn bộ điểm point
+# 3 - Mô tả tham số truyền
++ Params:
++ QueryString:
++ Data(Body):   
+# 4 - Thành công trả về
+[20X] - danh sách các points
+# 5 - Lỗi trả về
+[40X] - errors: ["Thông tin lỗi"];
+# 6 - Ví dụ  thành công (nếu có thể):
+
+GET'/api/points'
+
+Kết quả: 
+[200] -
+[{
+"_id": "5a3bd00bcea16413ac99f5bb",
+"info": {
+"_id": "5a2b883469fb0f0128c099f6",
+"phone": "01672810918",
+"name": "Hoang Le Thuy Hang",
+"address": "60 Hoang Hoa Tham",
+"type": "normal",
+"status": "created_point",
+"__v": 0,
+"point": "5a478662fc836212342e8002"
+},
+"location": {
+"lat": "123.45",
+"lng": "4545.7"
+}]
+
+-----------------------------------------------------------
+# 1 - Api đầy đủ
+
+POST /api/points/accept/:pointId
+
+
+# 2 - Dùng khi tài xế đồng ý điểm request để tiến hành đến chở
+# 3 - Mô tả tham số truyền
++ Params: pointId là Id của điểm car muốn đồng ý, dựa vào token sẽ biết được tài xế nào đồng ý
++ QueryString:
++ Data(Body):   
+# 4 - Thành công trả về
+[20X] - Trả về point được cập nhật, và xe đã cập nhật
+# 5 - Lỗi trả về
+[40X] - errors: ["Thông tin lỗi"];
+# 6 - Ví dụ  thành công (nếu có thể):
+
+POST '/api/points/accept/5a3bd00bcea16413ac99f5bb'
+
+Kết quả: 
+[200] -
+[
+  {
+"status": "busy",
+"_id": "5a2b6dd12f29e708a8d7a9ae",
+"carNumber": "BS60-4010",
+"username": "tichondrius",
+"password": "123456",
+"type": "normal",
+"drivenName": "Bui Thanh Van",
+"personCode": "272461389",
+"__v": 0,
+"location": {
+"lng": 1,
+"lat": 123
+}
+},
+  {
+"_id": "5a3bd00bcea16413ac99f5bb",
+"info": "5a2b883469fb0f0128c099f6",
+"location": {
+"lat": "123.45",
+"lng": "4545.7"
+},
+"real_address": "60 Hoang Hoa Tham",
+"__v": 0,
+"car": "5a2b6dd12f29e708a8d7a9ae",
+"status": "incoming"
+}
+],
+
+-----------------------------------------------------------
+# 1 - Api đầy đủ
+
+POST /api/points/updateStatus/:pointId
+
+
+# 2 - Dùng khi tài xế cập nhật tình trang point khi đến đúng nơi đón(is_tranfering) và khi hoàn thành chuyến chở (complete)
+
+# 3 - Mô tả tham số truyền
++ Params: pointId là Id của điểm car muốn đồng ý, dựa vào token sẽ biết được tài xế nào đồng ý
++ QueryString:
++ Data(Body):   
+{
+    status: # Trạng thái điểm muốn cập nhật, Có 2 loại giá trị được truyền là `is_transfering` và `complete`
+}
+# 4 - Thành công trả về
+[20X] - Nếu cập nhật status về `is_tranfering` thì thành công trả về point được update, nếu là `complete` trả về cả point updated và xe updated 
+# 5 - Lỗi trả về
+[40X] - errors: ["Thông tin lỗi"];
+# 6 - Ví dụ  thành công (nếu có thể):
+
+POST '/api/points/updateStatus/5a3bd00bcea16413ac99f5bb'
+{
+  "status": "complete"
+}
+
+Kết quả: 
+[200] -
+[
+  {
+"_id": "5a3bd00bcea16413ac99f5bb",
+"info": "5a2b883469fb0f0128c099f6",
+"location": {
+"lat": "123.45",
+"lng": "4545.7"
+},
+"real_address": "60 Hoang Hoa Tham",
+"__v": 0,
+"car": "5a2b6dd12f29e708a8d7a9ae",
+"status": "complete"
+},
+  {
+"_id": "5a2b6dd12f29e708a8d7a9ae",
+"carNumber": "BS60-4010",
+"username": "tichondrius",
+"password": "123456",
+"type": "normal",
+"drivenName": "Bui Thanh Van",
+"personCode": "272461389",
+"__v": 0,
+"location": {
+"lng": 1,
+"lat": 123
+},
+"status": "free"
+}
+]
+
+Về socket có các hàm hiện tại
+
+Lắng nghe từ client (client gọi) server.on | client.emit
+
+'auth.user.login' (token) : Dùng để sau khi user login thành công, app người dùng
+cần emit function này để gửi token về xem như là auth cho socket
+
+Đối số token: Lấy sau khi gọi api login -> login thành công
+Mục đích nhờ vào token biết socket này mang thông tin gì xếp loại người dùng để tiện sau này     
+
+'auth.user.logout' () : Dùng sau khi user thực hiện logout thành công, app người dùng
+cần emit function này để gửi thông tin server loại connection id này khỏi danh sách
+
+
+Gọi xuống client (server gọi): server.emit, client.on
+'server/Request_Point' (point): Mục đích ứng với mỗi lần client nhận được từ đây
+Nghĩa là server request chính người nhận (car) có đồng ý với point này không 
+Nếu đồng ý gọi api updateStatus phía trên, không đồng ý thì thôi k cần tác động lên server
+
+Hiện tại có thể test hàm này khi:
+Client mobile car đã thực hiện hướng dẫn kết nối socket như đã hướng dẫn hôm bữa
+Gọi api tạo point từ một Info bất kỳ để mobile nhận được tín hiệu point đó.
+
+'something.server.want.to.send'(message): Mục đích hiện tại
+dùng để test user đã gửi 'auth.user.login' thành công và phía server sẽ
+gửi lại hàm something.server.want.to.send với message là 'message'
+
+hàm này cần được lắng nghe ở phía client sau khi đã kết nổi với socket   
+
+-----------------------------------------------------------
+ 
