@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import { withRouter } from 'react-router-dom';
 import FontIcon from 'material-ui/FontIcon';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
-
+import { ROUTE_PATH } from '../../../../Routes';
 import { FooterWrapperStyled } from '../../stylesheets/footer.style';
 
 const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
@@ -16,31 +17,34 @@ const nearbyIcon = <IconLocationOn />;
  * state (for instance, by the URL).
  */
 class Footer extends Component {
-  state = {
-    selectedIndex: 0,
-  };
-
-  select = (index) => this.setState({selectedIndex: index});
-
+  changePath = (path) => {
+    this.props.history.push(path);
+  }
   render() {
+    const { pathname } = this.props.location;
+    let index = -1;
+    switch (pathname) {
+      case ROUTE_PATH.INFO_LIST:
+        index = 0;
+    }
     return (
       <FooterWrapperStyled>
         <Paper zDepth={1}>
-          <BottomNavigation selectedIndex={this.state.selectedIndex}>
+          <BottomNavigation selectedIndex={index}>
             <BottomNavigationItem
-              label="Recents"
+              label="Thông tin"
               icon={recentsIcon}
-              onClick={() => this.select(0)}
+              onClick={() => this.changePath(ROUTE_PATH.INFO_LIST)}
             />
             <BottomNavigationItem
-              label="Favorites"
+              label="Điểm"
               icon={favoritesIcon}
-              onClick={() => this.select(1)}
+              onClick={() => {}}
             />
             <BottomNavigationItem
-              label="Nearby"
+              label="Xe"
               icon={nearbyIcon}
-              onClick={() => this.select(2)}
+              onClick={() => {}}
             />
           </BottomNavigation>
         </Paper>
@@ -49,4 +53,4 @@ class Footer extends Component {
   }
 }
 
-export default Footer;
+export default withRouter(Footer);

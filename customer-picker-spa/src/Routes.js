@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { App } from './modules/core/components'
 import { LoginPage } from './modules/login/containers';
 import { HomePage } from './modules/home/containers';
+import { InfoListPage } from './modules/info/containers';
+import { CreatePointPage } from './modules/point/containers';
 
 import configureStore from './redux/configureStore'
 
@@ -15,6 +17,8 @@ export const ROUTE_PATH = {
   ROOT: '/',
   HOME: '/home',
   LOGIN: '/login',
+  INFO_LIST: '/infos',
+  POINT_CREATE: '/create-point'
 }
 
 
@@ -28,6 +32,8 @@ export default class Routes extends Component {
               <Switch>
                 <LoginRequired path={ROUTE_PATH.HOME} component={HomePage} />
                 <Route path={ROUTE_PATH.LOGIN} component={LoginPage} />
+                <LoginRequired path={ROUTE_PATH.INFO_LIST} component={InfoListPage} />
+                <LoginRequired path={ROUTE_PATH.POINT_CREATE} component={CreatePointPage} />
                 <Redirect from={ROUTE_PATH.ROOT} to={ROUTE_PATH.HOME} />
               </Switch>
             </App>

@@ -45,18 +45,19 @@ const Header = (props) => {
         <MenuItem onClick={() => changeRoute(ROUTE_PATH.HOME)}>
           Trang chủ
         </MenuItem>
-        <MenuItem onClick={() => changeRoute(ROUTE_PATH.LOGIN)}>
-          Login
+        {
+          wasLogged == false &&
+            <MenuItem onClick={() => changeRoute(ROUTE_PATH.LOGIN)}>
+              Login
+            </MenuItem>
+        }
+        <MenuItem onClick={() => changeRoute(ROUTE_PATH.INFO_LIST)}>
+          Danh sách cần tạo điểm  
         </MenuItem>
-        <MenuItem onClick={() => changeRoute(ROUTE_PATH.SEARCH)}>
-          Tìm kiếm
+        <MenuItem onClick={() => changeRoute(ROUTE_PATH.INFO_LIST)}>
+          Quản lý danh sách điểm  
         </MenuItem>
-        <MenuItem onClick={() => changeRoute(ROUTE_PATH.PAGE1)}>
-          Page1 (No login required)
-        </MenuItem>
-        <MenuItem onClick={() => changeRoute(ROUTE_PATH.PAGE2)}>
-          Page2 (Login required)
-        </MenuItem>
+       
       </Drawer>
     </HeaderWrapperStyled>)
 };
