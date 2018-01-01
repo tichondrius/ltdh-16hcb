@@ -13,10 +13,20 @@ export const getPoints = () => ({
   url: 'api/points',
 });
 
+export const createPoint = (infoId, location, real_address) => ({
+  method: 'POST',
+  url: 'api/points',
+  data: {
+    info: infoId,
+    location,
+    real_address,
+  }
+});
 
 
 export default {
   getCars,
   getInfos,
   getPoints,
+  createPoint,
 };

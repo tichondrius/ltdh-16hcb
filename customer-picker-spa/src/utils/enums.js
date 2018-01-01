@@ -31,7 +31,15 @@ const ENUMS = {
     SERVER_INFO_UPDATED: 'server/Info_Updated',
     SERVER_POINT_ADDED: 'server/Point_Added',
     SERVER_POINT_UPDATED: 'server/Point_Updated',
-  }  
+  },
+  GEO_CODING_TYPE_ERROR: {
+    NOT_FOUND: 'not_found',
+    FORMAT_ERROR: 'format_error',
+  },
+  MARKER_TYPE: {
+    CUSOMTER: 'customer',
+    CAR: 'car',
+  }
 }
 
 module.exports = ENUMS;
