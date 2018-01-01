@@ -31,6 +31,7 @@ export default class Routes extends Component {
             <App>
               <Switch>
                 <LoginRequired path={ROUTE_PATH.HOME} component={HomePage} />
+                <LoginRequired path={`${ROUTE_PATH.POINT_CREATE}/:infoId`} component={CreatePointPage}/>
                 <Route path={ROUTE_PATH.LOGIN} component={LoginPage} />
                 <LoginRequired path={ROUTE_PATH.INFO_LIST} component={InfoListPage} />
                 <LoginRequired path={ROUTE_PATH.POINT_CREATE} component={CreatePointPage} />

@@ -14,10 +14,13 @@ import {
 import { connect } from 'react-redux';
 
 import { INFO_STATUS } from '../../../utils/enums';
+import { ROUTE_PATH } from '../../../Routes';
 
 export class InfoListPage extends Component {
 
-
+  changePath = (path) => {
+    this.props.history.push(path);
+  }
   render() {
     const { infos } = this.props;
     return (
@@ -40,14 +43,14 @@ export class InfoListPage extends Component {
             <TableBody
              displayRowCheckbox={false}>
               {this.props.infos.map((info) => (
-              <TableRow>
+              <TableRow key={info._id}>
                 <TableRowColumn>{info._id}</TableRowColumn>
                 <TableRowColumn>{info.name}</TableRowColumn>
                 <TableRowColumn>{info.phone}</TableRowColumn>
                 <TableRowColumn>{info.address}</TableRowColumn>
                 <TableRowColumn>{info.status}</TableRowColumn>
                 <TableRowColumn>
-                  <ButtonStyled>Định vị</ButtonStyled>
+                  <ButtonStyled onClick={() => this.changePath(`${ROUTE_PATH.POINT_CREATE}/${info._id}`)}>Định vị</ButtonStyled>
                 </TableRowColumn>
               </TableRow>
               ))}
