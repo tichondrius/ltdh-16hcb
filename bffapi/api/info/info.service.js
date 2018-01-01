@@ -49,7 +49,7 @@ const socketEmitInfoAdded = (newInfoId) => {
         .getSocketIdByTypes([enums.TYPE_USER.CUSTOMER_PICKER, enums.TYPE_USER.TELEPHONLIST]);
       users.forEach((user) => {
         global.io.sockets.sockets[user.socketId]
-          .emit(enums.SOCKET_METHOD.SERVER_INFO_UPDATED, newInfo);
+          .emit(enums.SOCKET_METHOD.SERVER_INFO_ADDED, newInfo);
       });
     }).catch(error => {
       console.log('error', error);

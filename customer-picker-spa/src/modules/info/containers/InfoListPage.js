@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
 import {
-  ContainerWrapperStyled } from '../../core/stylesheets/core.styles';
+  ContainerWrapperStyled, ButtonStyled } from '../../core/stylesheets/core.styles';
 import { Row, Column } from '../../core/stylesheets/column-row.styles';
 import {
   Table,
@@ -25,16 +25,20 @@ export class InfoListPage extends Component {
         <ContainerWrapperStyled>
           <h1>Danh sách cần được định vị</h1>
           <Table>
-            <TableHeader>
+            <TableHeader
+              displaySelectAll={false}
+              adjustForCheckbox={false}>
               <TableRow>
                 <TableHeaderColumn>ID</TableHeaderColumn>
                 <TableHeaderColumn>Tên KH</TableHeaderColumn>
                 <TableHeaderColumn>Địa chỉ cung cấp</TableHeaderColumn>
                 <TableHeaderColumn>Loại dịch vụ</TableHeaderColumn>
                 <TableHeaderColumn>Trạng thái</TableHeaderColumn>
+                <TableHeaderColumn>Thao tác</TableHeaderColumn>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody
+             displayRowCheckbox={false}>
               {this.props.infos.map((info) => (
               <TableRow>
                 <TableRowColumn>{info._id}</TableRowColumn>
@@ -42,6 +46,9 @@ export class InfoListPage extends Component {
                 <TableRowColumn>{info.phone}</TableRowColumn>
                 <TableRowColumn>{info.address}</TableRowColumn>
                 <TableRowColumn>{info.status}</TableRowColumn>
+                <TableRowColumn>
+                  <ButtonStyled>Định vị</ButtonStyled>
+                </TableRowColumn>
               </TableRow>
               ))}
             </TableBody>
